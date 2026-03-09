@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Home Voice Control</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+text-align:center;
+margin:0;
+}
+
+h1{
+background:#2c3e50;
+color:white;
+padding:15px;
+}
+
+.container{
+padding:20px;
+}
+
+.device{
+background:white;
+padding:20px;
+margin:15px;
+border-radius:10px;
+font-size:20px;
+}
+
+.status{
+font-weight:bold;
+color:green;
+}
+
+button{
+padding:15px 25px;
+font-size:18px;
+background:#3498db;
+color:white;
+border:none;
+border-radius:8px;
+margin-top:20px;
+cursor:pointer;
+}
+
+#command{
+font-size:18px;
+margin-top:15px;
+color:#333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Smart Home Control</h1>
+
+<div class="container">
+
+<div class="device">
+💡 Light: <span id="light" class="status">OFF</span>
+</div>
+
+<div class="device">
+🌀 Fan: <span id="fan" class="status">OFF</span>
+</div>
+
+<div class="device">
+🚪 Door: <span id="door" class="status">CLOSED</span>
+</div>
+
+<button onclick="startVoice()">🎤 Start Voice Command</button>
+
+<p id="command">Say a command like "Turn on light"</p>
+
+</div>
+
+<script>
+
+function startVoice(){
+
+const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+recognition.start();
+
+recognition.onresult = function(event){
+
+let speech = event.results[0][0].transcript.toLowerCase();
+
+document.getElementById("command").innerText="Command: "+speech;
+
+if(speech.includes("light on") || speech.includes("turn on light"))
+document.getElementById("light").innerText="ON";
+
+if(speech.includes("light off") || speech.includes("turn off light"))
+document.getElementById("light").innerText="OFF";
+
+if(speech.includes("fan on"))
+document.getElementById("fan").innerText="ON";
+
+if(speech.includes("fan off"))
+document.getElementById("fan").innerText="OFF";
+
+if(speech.includes("open door"))
+document.getElementById("door").innerText="OPEN";
+
+if(speech.includes("close door"))
+document.getElementById("door").innerText="CLOSED";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
